@@ -5,7 +5,7 @@ using LabApi.Features.Permissions;
 using LabApi.Features.Wrappers;
 using System;
 
-namespace KittsBadgeSystem.Features.Commands.BadgeCommand;
+namespace KittsBadgeSystem.Features.Commands.BadgeCommands;
 
 [CommandHandler(typeof(ClientCommandHandler))]
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
@@ -39,14 +39,14 @@ internal sealed class BadgeParentCommand : ParentCommand
         }
 
         Player player = Player.Get(sender);
-        BadgeData badge = player.GetBadgeData();
+        BadgeData data = player.GetBadgeData();
 
         response =
             "<b><color=yellow>Badge Settings</color></b>\n\n" +
-            $"Enabled: {(badge.BadgeEnabled ? "<color=green>Yes</color>" : "<color=red>No</color>")}\n" +
-            $"Rainbow: {(badge.RainbowEnabled ? "<color=green>Yes</color>" : "<color=red>No</color>")}\n" +
-            $"Colour: {badge.BadgeColour}\n" +
-            $"Text: {badge.BadgeText}\n\n" +
+            $"Enabled: {(data.BadgeEnabled ? "<color=green>Yes</color>" : "<color=red>No</color>")}\n" +
+            $"Rainbow: {(data.RainbowEnabled ? "<color=green>Yes</color>" : "<color=red>No</color>")}\n" +
+            $"Colour: {data.BadgeColour}\n" +
+            $"Text: {data.BadgeText}\n\n" +
             "<b>Commands</b>\n" +
             "badge toggle\n" +
             "badge rainbow\n" +

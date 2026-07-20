@@ -74,10 +74,10 @@ public static class DatabaseMongo
             return;
 
         _playerBadgeDataCollection.ReplaceOne(
-                p => p.UserId == badgeData.UserId,
-                badgeData,
-                new ReplaceOptions { IsUpsert = true }
-            );
+            p => p.UserId == badgeData.UserId,
+            badgeData,
+            new ReplaceOptions { IsUpsert = true }
+        );
 
         Log.Debug("Database.UploadBadgeData", $"{player.UserId} | {player.DisplayName}");
     }

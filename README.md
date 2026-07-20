@@ -6,56 +6,53 @@
 `KittsBadgeSystem` is a tool that controls badges for `SCP Secret Laboratory` using `LabAPI`.
 
 ## Consider Supporting?
-If you enjoy this project and would like to support future development, I would greatly appreciate it if you considered donating via my [Ko-Fi](https://ko-fi.com/kittscloud).	
+If you enjoy this project and would like to support future development, I would greatly appreciate it if you considered donating via my [`Ko-Fi`](https://ko-fi.com/kittscloud).
 
-## NuGet Package
-The `NuGet Package` offers easy intergation of this tool. You can find the `NuGet Packages` here:
-- [KittsBadgeSystem](https://www.nuget.org/packages/KittsBadgeSystem)
-- [KittsBadgeSystem-MongoDB](https://www.nuget.org/packages/KittsBadgeSystem-MongoDB)
+## Installation
+`KittsBadgeSystem` is available in two editions:
 
-## How to use KittsBadgeSystem:
-There are two options when it comes to installing `KittsBadgeSystem`, normal and MongoDB.
-The difference between the two is that normal stores everything in a `.JSON` and MongoDB stores everything in a Mongo database. 
+- **Standard**: Stores all infractions in a local JSON file.
+- **MongoDB**: Stores all infractions in a MongoDB database.
 
-To install `KittsBadgeSystem` on your server, you will need:
-- `Newtonsoft.Json` `v13.0.4` or later.
-- `KittsBadgeSystem` latest verion.
+All required files can be found in the [`latest release`](https://github.com/Kittscloud/KittsBadgeSystem/releases/latest).
 
-To install `KittsBadgeSystem` with MonogDB on your server, you will need:
-- `DnsClient` `v1.6.1` or later.
-- `Microsoft.Extensions.Logging.Abstractions` `v2.0.0` or later.
-- `MognoDB.Bson` `v3.10.0` or later.
-- `MongoDB.Driver` `v3.10.0` or later.
-- `KittsBadgeSystem` latest verion.
+### Standard
+**Required files**
+- `KittsBadgeSystem.dll` (latest version)
+- `Newtonsoft.Json.dll` (`v13.0.4` or later)
 
-All of these files can be found in the [latest release](https://github.com/Kittscloud/KittsBadgeSystem/releases/latest).
+**Installation**
+- Place `KittsBadgeSystem.dll` in your `plugins` folder.
+- Place `Newtonsoft.Json.dll` in your `dependencies` folder.
 
-Once you have these:
-- Place `DnsClient.dll` in the `dependencies` folder, if applicable.
-- Place `Microsoft.Extensions.Logging.Abstractions.dll` in the `dependencies` folder, if applicable.
-- Place `MognoDB.Bson.dll` in the `dependencies` folder, if applicable.
-- Place `MognoDB.Driver.dll` in the `dependencies` folder, if applicable.
-- Place `Newtonsoft.Json.dll` in the `dependencies` folder, if applicable.
-- Place `KittsInfractionSystem.dll` in the `plugins` folder.
+### MongoDB
+**Required files**
+- `KittsBadgeSystem-MongoDB.dll` (latest version)
+- `DnsClient.dll` (`v1.6.1` or later)
+- `Microsoft.Extensions.Logging.Abstractions.dll` (`v2.0.0` or later)
+- `MongoDB.Bson.dll` (`v3.10.0` or later)
+- `MongoDB.Driver.dll` (`v3.10.0` or later)
+
+**Installation**
+- Place `KittsBadgeSystem-MongoDB.dll` in your `plugins` folder.
+- Place all other `.dll` files in your `dependencies` folder.
 
 Run the server and you're set!
 
 ### Configurations:
 | Parameter                   | Type     | Description                                                            | Default Value                            |
 |-----------------------------|----------|------------------------------------------------------------------------|------------------------------------------|
-| `IsEnabled`                 | `bool`   | Is plugin enabled.                                                     | `true`                                   |
 | `Debug`                     | `bool`   | Sends debug logs to console.                                           | `false`                                  |
 | `MongoDBURI`                | `string` | MongoDB URI.                                                           | `"mongodb://username:password@ip:port/"` |
-| `MongoDBName`               | `string` | MongoDB name.                                                          | `KittsPlayerAnalyticsSystem`             |
-| `MongoDBCollectionName`     | `string` | MongoDB collection name if using database.                             | `PlayerAnalyticsData`                    |
-| `UseMongoDB`                | `bool`   | Should save to MongoDB, saves to JSON if flase, does not migrate data. | `false`                                  |
-| `PlayerBadgePermission`     | `string` | Permission for player badge command.                                   | `"kts.badge"`                            |
-| `AdminBadgePermission`      | `string` | Permission for admin badge command.                                    | `"kts.badgeamin"`                        |
+| `MongoDBName`               | `string` | MongoDB name.                                                          | `KittsBadgeSystem`                       |
+| `MongoDBCollectionName`     | `string` | MongoDB collection name if using database.                             | `BadgeData`                              |
+| `PlayerBadgePermission`     | `string` | Permission for player badge command.                                   | `kts.badge`                              |
+| `AdminBadgePermission`      | `string` | Permission for admin badge command.                                    | `kts.badgeadmin`                         |
+| `DefaultBadgeFormat`        | `string` | Formatting for badges with no text, {group} = groupName.               | `'{group}'`                              |
+| `BadgeFormat`               | `string` | Permission for admin badge command.                                    | `'{group} | {text}'`                     |
 
 ### Default YML Config File
 ```yml
-# Is plugin enabled
-is_enabled: true
 # Sends debug logs to console
 debug: false
 # Permission for player badge command
@@ -70,8 +67,6 @@ badge_format: '{group} | {text}'
 
 ### MongoDB YML Config File
 ```yml
-# Is plugin enabled
-is_enabled: true
 # Sends debug logs to console
 debug: false
 # MongoDB URI
@@ -79,7 +74,7 @@ mongo_d_b_u_r_i: mongodb://username:password@ip:port/
 # MongoDB name
 mongo_d_b_name: KittsPlayerAnalyticsSystem
 # MongoDB collection name
-mongo_d_b_collection_name: PlayerAnalyticsData
+mongo_d_b_collection_name: BadgeData
 # Permission for player badge command
 player_badge_permission: kts.badge
 # Permission for admin badge command
@@ -91,10 +86,14 @@ badge_format: '{group} | {text}'
 ```
 
 ### Want to use in your own project?
-To install in your project, simply reference the `KittsBadgeSystem.dll` file, found in the [latest release](https://github.com/Kittscloud/KittsMenuSystem/releases/latest).
+To install in your project, simply reference the `KittsBadgeSystem.dll` file, found in the [`latest release`](https://github.com/Kittscloud/KittsBadgeSystem/releases/latest).
 
-`KittsBadgeSystem.dll` is really easy to use, if you would like to change someone's badge data you can do `Player.GetBadgeData()` and change what you want, it will automatically update.
-You cna also use the command if you're only using this as a standalone plugin.
+Alternatively, you can use the `NuGet Package` which can be found here:
+- [`KittsBadgeSystem`](https://www.nuget.org/packages/KittsBadgeSystem)
+- [`KittsBadgeSystem-MongoDB`](https://www.nuget.org/packages/KittsBadgeSystem-MongoDB)
+
+`KittsBadgeSystem.dll` is really easy to use, if you would like to change someone's badge data you can do `Player.GetBadgeData()` and change what you want.
+You can also use the command if you're only using this as a standalone plugin.
 
 A really simple example of using this plugin could be the colour being changed to a random colour when jumping as shown below.
 
@@ -105,6 +104,7 @@ public override void OnPlayerJumped(PlayerJumpedEventArgs ev)
 
     // If you're not using MonogoDB you will need to update the JsonCache as shown below
     DatabaseJson.SaveJsonCache();
+    // If you are using MongoDB it will automatically update to the database
 }
 ```
 

@@ -50,11 +50,10 @@ public static class ColourTypes
     public static ColourInfo RandomValid() => AllValid.ElementAt(UnityEngine.Random.Range(0, All.Count)).Value;
 
     private static readonly IReadOnlyDictionary<string, ColourInfo> _lookup = AllValid.Values
-        .SelectMany(c => new[]
-        {
-            new KeyValuePair<string, ColourInfo>(c.DisplayName, c),
-            new KeyValuePair<string, ColourInfo>(c.InternalName, c)
-        })
+        .Select(c => new KeyValuePair<string, ColourInfo>(c.DisplayName, c))
+        .Concat(
+            AllValid.Values.Select(c => new KeyValuePair<string, ColourInfo>(c.InternalName, c))
+        )
         .GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
         .ToDictionary(x => x.Key, x => x.First().Value, StringComparer.OrdinalIgnoreCase);
 

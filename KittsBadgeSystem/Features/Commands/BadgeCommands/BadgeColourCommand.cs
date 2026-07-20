@@ -6,13 +6,13 @@ using LabApi.Features.Wrappers;
 using System;
 using System.Linq;
 
-namespace KittsBadgeSystem.Features.Commands.BadgeCommand;
+namespace KittsBadgeSystem.Features.Commands.BadgeCommands;
 
 internal sealed class BadgeColourCommand : ICommand
 {
     public string Command => "colour";
     public string[] Aliases => ["color", "c"];
-    public string Description => "Set your badge colour";
+    public string Description => "Set badge colour";
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -34,7 +34,7 @@ internal sealed class BadgeColourCommand : ICommand
         DatabaseJson.SaveJsonCache();
 #endif
 
-        response = $"Badge colour set to {colour.DisplayName}.";
+        response = $"Badge colour set to {colour.EnumColour}.";
 
         Log.Debug("BadgeColourCommand", Player.Get(sender)?.DisplayName);
         return true;

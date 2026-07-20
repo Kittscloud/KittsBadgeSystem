@@ -43,9 +43,9 @@ public class Config
     public string AdminBadgePermission { get; set; } = "kts.badgeadmin";
 
     /// <summary>
-    /// Formatting for badges with not text, {group} = groupName.
+    /// Formatting for badges with no text, {group} = groupName.
     /// </summary>
-    [Description("Formatting for badges, {group} = groupName")]
+    [Description("Formatting for badges with no text, {group} = groupName")]
     public string DefaultBadgeFormat { get; set; } = "{group}";
 
     /// <summary>

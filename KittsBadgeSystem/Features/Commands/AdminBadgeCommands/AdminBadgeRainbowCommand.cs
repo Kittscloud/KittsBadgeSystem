@@ -4,7 +4,7 @@ using KittsBadgeSystem.Features.Models;
 using LabApi.Features.Wrappers;
 using System;
 
-namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommand;
+namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommands;
 
 [CommandHandler(typeof(AdminBadgeParentCommand))]
 internal sealed class AdminBadgeRainbowCommand : ICommand
@@ -27,15 +27,15 @@ internal sealed class AdminBadgeRainbowCommand : ICommand
             return false;
         }
 
-        BadgeData badge = player.GetBadgeData();
+        BadgeData data = player.GetBadgeData();
 
-        badge.RainbowEnabled = !badge.RainbowEnabled;
+        data.RainbowEnabled = !data.RainbowEnabled;
 
 #if !MONGODB
         DatabaseJson.SaveJsonCache();
 #endif
 
-        response = $"Rainbow {(badge.RainbowEnabled ? "enabled" : "disabled")}.";
+        response = $"Rainbow {(data.RainbowEnabled ? "enabled" : "disabled")}.";
 
         Log.Debug("AdminBadgeRainbowCommand", $"{Player.Get(sender)?.DisplayName} changed {player.DisplayName}");
         return true;

@@ -6,7 +6,7 @@ using LabApi.Features.Wrappers;
 using System;
 using System.Linq;
 
-namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommand;
+namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommands;
 
 [CommandHandler(typeof(AdminBadgeParentCommand))]
 [CommandHandler(typeof(GameConsoleCommandHandler))]
@@ -14,7 +14,7 @@ internal sealed class AdminBadgeColourCommand : ICommand
 {
     public string Command => "colour";
     public string[] Aliases => ["color", "c"];
-    public string Description => "Set your badge colour";
+    public string Description => "Set badge colour";
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -42,7 +42,7 @@ internal sealed class AdminBadgeColourCommand : ICommand
         DatabaseJson.SaveJsonCache();
 #endif
 
-        response = $"Badge colour set to {colour.DisplayName}.";
+        response = $"Badge colour set to {colour.EnumColour}.";
 
         Log.Debug("AdminBadgeColourCommand", $"{Player.Get(sender)?.DisplayName} changed {player.DisplayName}");
         return true;

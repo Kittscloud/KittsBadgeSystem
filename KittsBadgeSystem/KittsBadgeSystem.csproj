@@ -16,7 +16,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <Platforms>x64;x64</Platforms>
+        <Platforms>x64</Platforms>
 		
 		<NoWarn>1591</NoWarn>
     </PropertyGroup>
@@ -26,9 +26,9 @@
 		<Title>Kitts Badge System</Title>
 		<Description>KittsBadgeSystem is a tool that controls badges for SCP Secret Laboratory using LabAPI.</Description>
 		<Authors>Kittscloud</Authors>
-		<Version>0.1.0</Version>
+		<Version>0.1.1</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageReadmeFile>READMENUGET.md</PackageReadmeFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageTags>badges;badge-system;badge-manager;badge-management;player-badges;custom-badges;roles;permissions;cosmetics;player-customization;SCP-SL;plugin;game-server;server-management;administration;moderation;gaming-tools;</PackageTags>
 		<RepositoryUrl>https://github.com/Kittscloud/KittsPlayerAnalyticsSystem</RepositoryUrl>
@@ -37,7 +37,6 @@
 
 	<ItemGroup>
 	  <None Include="..\LICENSE"> <Pack>True</Pack><PackagePath>\</PackagePath> </None>
-	  <None Include="..\READMENUGET.md"> <Pack>True</Pack><PackagePath>\</PackagePath> </None>
 	  <None Include="..\README.md"> <Pack>True</Pack><PackagePath>\</PackagePath> </None>
 	  <None Include="..\CHANGELOG.md"> <Pack>True</Pack><PackagePath>\</PackagePath> </None>
 	</ItemGroup>

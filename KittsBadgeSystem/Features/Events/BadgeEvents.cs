@@ -1,6 +1,5 @@
 ﻿#if MONGODB
 using KittsBadgeSystem.Features.Database;
-using KittsBadgeSystem.Features.Types;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
 
@@ -16,11 +15,6 @@ internal sealed class BadgeEvents : CustomEventsHandler
     public override void OnPlayerLeft(PlayerLeftEventArgs ev)
     {
         ev.Player.UploadBadgeData();
-    }
-
-    public override void OnPlayerJumped(PlayerJumpedEventArgs ev)
-    {
-        ev.Player.GetBadgeData().BadgeColour = ColourTypes.Random().EnumColour;
     }
 }
 #endif

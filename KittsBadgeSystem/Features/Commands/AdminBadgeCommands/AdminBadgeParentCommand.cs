@@ -5,7 +5,7 @@ using LabApi.Features.Permissions;
 using LabApi.Features.Wrappers;
 using System;
 
-namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommand;
+namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommands;
 
 [CommandHandler(typeof(ClientCommandHandler))]
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
@@ -29,6 +29,8 @@ internal sealed class AdminBadgeParentCommand : ParentCommand
         RegisterCommand(new AdminBadgeRainbowCommand());
         RegisterCommand(new AdminBadgeColourCommand());
         RegisterCommand(new AdminBadgeTextCommand());
+        RegisterCommand(new AdminBadgeTextCommand());
+        RegisterCommand(new AdminBadgeResetCommand());
     }
 
     protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
@@ -39,7 +41,7 @@ internal sealed class AdminBadgeParentCommand : ParentCommand
             return false;
         }
 
-        if (arguments.Count == 0)
+        if (arguments.Count != 1)
         {
             response = "Usage: abadge <player>";
             return false;
@@ -51,19 +53,20 @@ internal sealed class AdminBadgeParentCommand : ParentCommand
             return false;
         }
 
-        BadgeData badge = player.GetBadgeData();
+        BadgeData data = player.GetBadgeData();
 
         response =
             $"Badge settings for {player.DisplayName}\n\n" +
-            $"Enabled: {badge.BadgeEnabled}\n" +
-            $"Rainbow: {badge.RainbowEnabled}\n" +
-            $"Colour: {badge.BadgeColour}\n" +
-            $"Text: {badge.BadgeText}\n\n" +
+            $"Enabled: {data.BadgeEnabled}\n" +
+            $"Rainbow: {data.RainbowEnabled}\n" +
+            $"Colour: {data.BadgeColour}\n" +
+            $"Text: {data.BadgeText}\n\n" +
             $"Commands:\n" +
             $"abadge toggle {player.PlayerId}\n" +
             $"abadge rainbow {player.PlayerId}\n" +
             $"abadge colour {player.PlayerId} <colour>\n" +
-            $"abadge text {player.PlayerId} <text>";
+            $"abadge text {player.PlayerId} <text>\n" +
+            $"abadge reset {player.PlayerId}";
 
         return true;
     }
