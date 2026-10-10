@@ -29,7 +29,6 @@ internal sealed class AdminBadgeParentCommand : ParentCommand
         RegisterCommand(new AdminBadgeRainbowCommand());
         RegisterCommand(new AdminBadgeColourCommand());
         RegisterCommand(new AdminBadgeTextCommand());
-        RegisterCommand(new AdminBadgeTextCommand());
         RegisterCommand(new AdminBadgeResetCommand());
     }
 

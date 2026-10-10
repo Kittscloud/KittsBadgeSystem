@@ -30,8 +30,8 @@ All required files can be found in the [`latest release`](https://github.com/Kit
 - `KittsBadgeSystem-MongoDB.dll` (latest version)
 - `DnsClient.dll` (`v1.6.1` or later)
 - `Microsoft.Extensions.Logging.Abstractions.dll` (`v2.0.0` or later)
-- `MongoDB.Bson.dll` (`v3.10.0` or later)
-- `MongoDB.Driver.dll` (`v3.10.0` or later)
+- `MongoDB.Bson.dll` (`v3.12.0` or later)
+- `MongoDB.Driver.dll` (`v3.12.0` or later)
 
 **Installation**
 - Place `KittsBadgeSystem-MongoDB.dll` in your `plugins` folder.
@@ -72,7 +72,7 @@ debug: false
 # MongoDB URI
 mongo_d_b_u_r_i: mongodb://username:password@ip:port/
 # MongoDB name
-mongo_d_b_name: KittsPlayerAnalyticsSystem
+mongo_d_b_name: KittsBadgeSystem
 # MongoDB collection name
 mongo_d_b_collection_name: BadgeData
 # Permission for player badge command
