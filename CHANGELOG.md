@@ -1,5 +1,8 @@
 # KittsBadgeSystem Changelog
 
+## Version 0.1.5
+- Updated `Dependencies` - Updated to the latest dependencies.
+
 ## Version 0.1.4
 - Fixed `Badge Command` - Fixed a bug where badge command could not be used in game console.
 - Fixed `Tag Visibility` - Fixed a bug where badge would stay hidden after running `showtag`.

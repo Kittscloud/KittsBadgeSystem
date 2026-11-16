@@ -26,7 +26,7 @@
 		<Title>Kitts Badge System</Title>
 		<Description>KittsBadgeSystem is a tool that controls badges for SCP Secret Laboratory using LabAPI.</Description>
 		<Authors>Kittscloud</Authors>
-		<Version>0.1.4</Version>
+		<Version>0.1.5</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -65,10 +65,10 @@
 	<!-- NuGet Packages -->
     <ItemGroup>
 		<PackageReference Include="Northwood.LabAPI" Version="1.1.7" />
-		<PackageReference Include="PolySharp" Version="1.16.0" PrivateAssets="all" />
+		<PackageReference Include="PolySharp" Version="1.17.1" PrivateAssets="all" />
 
 		<PackageReference Condition=" '$(Configuration)' == 'Release' " Include="Newtonsoft.Json" Version="13.0.4" />
-		<PackageReference Condition=" '$(Configuration)' == 'Release-MongoDB' " Include="MongoDB.Driver" Version="3.12.0" />
+		<PackageReference Condition=" '$(Configuration)' == 'Release-MongoDB' " Include="MongoDB.Driver" Version="3.14.0" />
 	</ItemGroup>
 
 	<!-- References -->
