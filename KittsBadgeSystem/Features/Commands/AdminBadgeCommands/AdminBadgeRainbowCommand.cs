@@ -10,7 +10,7 @@ namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommands;
 internal sealed class AdminBadgeRainbowCommand : ICommand
 {
     public string Command => "rainbow";
-    public string[] Aliases => ["r"];
+    public string[] Aliases => ["rn"];
     public string Description => "Toggle rainbow mode.";
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

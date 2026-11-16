@@ -5,6 +5,7 @@ using KittsBadgeSystem.Features.Types;
 using LabApi.Features.Wrappers;
 using MEC;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace KittsBadgeSystem.Features;
 
@@ -13,11 +14,14 @@ internal sealed class PlayerBadgeManager
     public static readonly PlayerBadgeManager Instance = new();
 
     private readonly Dictionary<Player, int> _rainbowPositions = [];
+    private readonly HashSet<Player> _managedPlayers = [];
+
+    public readonly Dictionary<Player, float> VisibilityChanged = [];
 
     private CoroutineHandle _handle;
     private bool _running;
 
-    private const float UpdateIntervalSeconds = 1f;
+    private const float UpdateIntervalSeconds = 0.5f;
 
     public void Start()
     {
@@ -36,6 +40,8 @@ internal sealed class PlayerBadgeManager
             return;
 
         _rainbowPositions.Clear();
+        _managedPlayers.Clear();
+        VisibilityChanged.Clear();
 
         Timing.KillCoroutines(_handle);
         _running = false;
@@ -57,6 +63,51 @@ internal sealed class PlayerBadgeManager
         foreach (Player player in Player.ReadyList)
         {
             BadgeData data = player.GetBadgeData();
+            ServerRoles serverRoles = player.ReferenceHub.serverRoles;
+
+            if (VisibilityChanged.TryGetValue(player, out float changedAt))
+            {
+                if (Time.time - changedAt < 1f)
+                {
+                    yield return Timing.WaitForOneFrame;
+                    continue;
+                }
+
+                VisibilityChanged.Remove(player);
+
+                if (!serverRoles.HasBadgeHidden)
+                {
+                    if (data.BadgeEnabled)
+                        _managedPlayers.Add(player);
+                    else
+                    {
+                        serverRoles.SetText(player.UserGroup.BadgeText);
+                        serverRoles.SetColor(player.UserGroup.BadgeColor);
+
+                        _managedPlayers.Remove(player);
+                    }
+                }
+            }
+
+            if (serverRoles.HasBadgeHidden)
+            {
+                yield return Timing.WaitForOneFrame;
+                continue;
+            }
+
+            if (!data.BadgeEnabled)
+            {
+                if (_managedPlayers.Remove(player))
+                {
+                    serverRoles.SetText(player.UserGroup.BadgeText);
+                    serverRoles.SetColor(player.UserGroup.BadgeColor);
+                }
+
+                yield return Timing.WaitForOneFrame;
+                continue;
+            }
+
+            _managedPlayers.Add(player);
 
             string badgeText = string.IsNullOrWhiteSpace(data.BadgeText)
                 ? KittsBadgeSystem.Config.DefaultBadgeFormat
@@ -65,29 +116,8 @@ internal sealed class PlayerBadgeManager
                     .Replace("{group}", player.UserGroup.BadgeText)
                     .Replace("{text}", data.BadgeText);
 
-            if (player.ReferenceHub.serverRoles.HasBadgeHidden)
-            {
-                player.ReferenceHub.serverRoles.HiddenBadge = data.BadgeEnabled
-                    ? badgeText
-                    : string.Empty;
-
-                player.ReferenceHub.serverRoles.RefreshHiddenTag();
-            }
-            else
-            {
-                if (data.BadgeEnabled)
-                {
-                    player.ReferenceHub.serverRoles.Network_myText = badgeText;
-
-                    player.ReferenceHub.serverRoles.Network_myColor = GetBadgeColour(player, data);
-                }
-                else
-                {
-                    player.ReferenceHub.serverRoles.Network_myText = player.UserGroup.BadgeText;
-
-                    player.ReferenceHub.serverRoles.Network_myColor = player.UserGroup.BadgeColor;
-                }
-            }
+            serverRoles.SetText(badgeText);
+            serverRoles.SetColor(GetBadgeColour(player, data));
 
             yield return Timing.WaitForOneFrame;
         }

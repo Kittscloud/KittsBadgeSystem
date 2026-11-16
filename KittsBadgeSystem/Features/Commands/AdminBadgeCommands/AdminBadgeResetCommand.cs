@@ -9,7 +9,7 @@ namespace KittsBadgeSystem.Features.Commands.AdminBadgeCommands;
 internal sealed class AdminBadgeResetCommand : ICommand
 {
     public string Command => "Reset";
-    public string[] Aliases => [];
+    public string[] Aliases => ["r"];
     public string Description => "Reset badge";
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)

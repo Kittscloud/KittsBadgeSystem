@@ -9,6 +9,7 @@ namespace KittsBadgeSystem.Features.Commands.BadgeCommands;
 
 [CommandHandler(typeof(ClientCommandHandler))]
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
+[CommandHandler(typeof(GameConsoleCommandHandler))]
 internal sealed class BadgeParentCommand : ParentCommand
 {
     public override string Command => "badge";
@@ -28,6 +29,7 @@ internal sealed class BadgeParentCommand : ParentCommand
         RegisterCommand(new BadgeRainbowCommand());
         RegisterCommand(new BadgeColourCommand());
         RegisterCommand(new BadgeTextCommand());
+        RegisterCommand(new BadgeResetCommand());
     }
 
     protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)

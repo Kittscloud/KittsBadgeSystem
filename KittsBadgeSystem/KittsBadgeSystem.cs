@@ -1,14 +1,12 @@
 ﻿using KittsBadgeSystem.Features;
 using KittsBadgeSystem.Features.Database;
+using KittsBadgeSystem.Features.Events;
+using LabApi.Events.CustomHandlers;
 using LabApi.Features;
 using LabApi.Loader;
 using LabApi.Loader.Features.Plugins;
 using LabApi.Loader.Features.Plugins.Enums;
 using System;
-#if MONGODB
-using KittsBadgeSystem.Features.Events;
-using LabApi.Events.CustomHandlers;
-#endif
 
 namespace KittsBadgeSystem;
 
@@ -20,15 +18,13 @@ public class KittsBadgeSystem : Plugin
     public override string Author { get; } = "Kittscloud";
     public override string Description { get; } = "";
     public override LoadPriority Priority { get; } = LoadPriority.Medium;
-    public override Version Version { get; } = new Version(0, 1, 3);
+    public override Version Version { get; } = new Version(0, 1, 4);
     public override Version RequiredApiVersion { get; } = new Version(LabApiProperties.CompiledVersion);
 
     public static Config Config { get; set; }
     private bool _errorLoadingConfig = false;
 
-#if MONGODB
     private BadgeEvents _badgeEvents;
-#endif
 
     public override void Enable()
     {
@@ -39,13 +35,13 @@ public class KittsBadgeSystem : Plugin
 
 #if MONGODB
         DatabaseMongo.Init();
+#else
+        DatabaseJson.Init();
+#endif
 
         _badgeEvents = new();
 
         CustomHandlersManager.RegisterEventsHandler(_badgeEvents);
-#else
-        DatabaseJson.Init();
-#endif
 
         PlayerBadgeManager.Instance.Start();
 
@@ -56,11 +52,11 @@ public class KittsBadgeSystem : Plugin
     {
         this.SaveConfig(Config, "config.yml");
 
-#if MONGODB
         CustomHandlersManager.UnregisterEventsHandler(_badgeEvents);
 
         _badgeEvents = null;
 
+#if MONGODB
         DatabaseMongo.Stop();
 #else
         DatabaseJson.Stop();
