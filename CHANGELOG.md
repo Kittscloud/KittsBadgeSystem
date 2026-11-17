@@ -1,5 +1,8 @@
 # KittsBadgeSystem Changelog
 
+## Version 0.1.6
+- Fixed `CoroutineHandle` - Fixed a bug where killing all coroutines would kill the plugin.
+
 ## Version 0.1.5
 - Updated `Dependencies` - Updated to the latest dependencies.
 

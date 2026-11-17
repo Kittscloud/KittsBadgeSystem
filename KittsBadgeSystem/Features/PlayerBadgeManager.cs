@@ -19,6 +19,7 @@ internal sealed class PlayerBadgeManager
     public readonly Dictionary<Player, float> VisibilityChanged = [];
 
     private CoroutineHandle _handle;
+    private float _nextCheck;
     private bool _running;
 
     private const float UpdateIntervalSeconds = 0.5f;
@@ -29,6 +30,9 @@ internal sealed class PlayerBadgeManager
             return;
 
         _running = true;
+
+        Timing.OnPreExecute += CheckCoroutine;
+
         _handle = Timing.RunCoroutine(Run());
 
         Log.Debug($"PlayerBadgeManager.Start", "Started");
@@ -39,14 +43,34 @@ internal sealed class PlayerBadgeManager
         if (!_running)
             return;
 
+        Timing.OnPreExecute -= CheckCoroutine;
+
         _rainbowPositions.Clear();
         _managedPlayers.Clear();
         VisibilityChanged.Clear();
 
-        Timing.KillCoroutines(_handle);
         _running = false;
 
+        Timing.OnPreExecute -= CheckCoroutine;
+
+        Timing.KillCoroutines(_handle);
+
         Log.Debug($"PlayerBadgeManager.Stop", "Stopped");
+    }
+
+    private void CheckCoroutine()
+    {
+        if (!_running || Time.unscaledTime < _nextCheck)
+            return;
+
+        _nextCheck = Time.unscaledTime + 1f;
+
+        if (!Timing.IsRunning(_handle))
+        {
+            Log.Warn("PlayerBadgeManager", "Coroutine stopped unexpectedly. Restarting.");
+
+            _handle = Timing.RunCoroutine(Run());
+        }
     }
 
     private IEnumerator<float> Run()
